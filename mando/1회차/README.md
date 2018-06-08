@@ -41,9 +41,9 @@ framework: component가 일관성 있는 분류, 체계를 갖고있는 것
 
 
 
-리플로우geometery calculater: 영역을 지정하는(계산하는)과정
+geometery calculater: 영역을 지정하는(계산하는)과정**(reflow)**
 
-리페인트fragment fill: 영역(fragment)을 채우는 과정
+fragment fill: 영역(fragment)을 채우는 과정**(repaint)**
 
 현대 렌더링 시스템은 위의 과정이 이뤄진다.
 
@@ -66,6 +66,10 @@ framework: component가 일관성 있는 분류, 체계를 갖고있는 것
 
 
 ## normal flow
+
+**DOM의 구조와 렌더링 시스템은 무관하다!**
+
+
 
 노말플로우의 렌더링 원칙(세 가지 알고리즘 원리)
 
@@ -114,6 +118,8 @@ visible 속성에서는 inline 엘리먼트의 크기가 상위 block엘리먼�
 
 하지만 케리지 리턴(`\n`)이나 스페이스 등 공백문자를 넣어주면 IFC가 공백문자로 나뉘어진 텍스트 노드를 개별 width를 갖는 엘리먼트 비슷하게 인식한다. 따라서 상위 width를 넘어가는 텍스트 노드를 아래로 내려줌
 
+다음 줄의 y좌표는 현재 인라인 요소 중 가장 height가 큰 요소의 hieght를 **line height**라고 놓고 그것을 기준으로 삼음
+
 
 
 ### RP
@@ -129,3 +135,59 @@ static 속성과 relative속성 둘 다 존재하면 relative가 뜨면서 stati
 
 
 지금까지 normal flow 아래에서 작동하는 방식을 봤다. absolute나 fixed는 normal flow가 아님으로 크기가 고정이 안되거나 다른 예외상황을 발생시킬 수 잇으니 알고있자!
+
+
+
+## float
+
+### float의 속성
+
+1. **LINE BOX 원리로 그려진다**
+
+2. **새로운 BFC 생성: **
+
+   * float속성이 등장하는 순간 기존의 BFC를 멈추고 새로운 BFC가 생성된다. 즉, float가 많아지면 많아질 수록 지오메트리 계산을 많이하므로 컴퓨팅적 소비를 유발한다.
+   * 새로운 BFC영역은 인라인 영역과 **float영역**이 차지하는 영역을 모두 포함한다.
+
+3. **인라인 가드:**
+
+   float는 인라인 요소의 가드로 작동한다. 즉, float영역은 인라인이 침범할 수 없다. **심지어 float가 속한 BFC가 아니더라도 인라인 요소는 float를 침범할 수 없다.** 
+
+
+
+### LINE BOX
+
+float속성의 엘리먼트가 생성되어 새롭게 생성된 BFC영역을 LINE BOX가 전부 사용할 수 있다
+
+`float: left`: line box의 가장 왼쪽에 위치시킨다
+
+line box영역은 오직 float만 신경쓴다
+
+line box영역은 다른 float요소를 제외하고 만들어진다.
+
+`float: left`의 엘리먼트의 왼쪽보다 더 왼쪽은 존재할 수 없다. 따라서 다음 left속성의 엘리먼트는 이전 left보다 더 왼쪽에 위치할 수 없다.(죽은 영역) 이 영역에는 인라인 엘리먼트도 올 수 없다.
+
+
+
+### float의 특약사항 - OVERFLOW
+
+* visible: 일반적으로 브라우저의 auto의 디폴트값
+* **hidden**: 내부 크기가 지오메트리를 넘어가면 짤라버림
+* **scroll**: 내부 크기가 지오메트리를 넘어가면 스크롤 생성
+* inherit
+* auto: 내부 크기가 커지면 부모도 커진다. 지오메트리가 커짐
+
+
+
+### HIDDEN과 SCROLL
+
+두 속성을 지니는 엘리먼트는 다음과 같은 규칙을 가진다
+
+* 새로운 BFC 생성
+* 새로운 BFC의 fagment는 line box의 바운드를 인식해서 만든다.(line box때문에 공간이 없다면 width, height가 0인 상태로 만들어진다.)
+
+위의 속성 때문에 float와 관련성을 갖는다
+
+
+
+### 인라인 엘리먼트가 *라인 박스 바운드* 때문에 밀려서 BFC가 커져야 할 경우 BFC는 커지지 않는다. 라인박스에 밀린 인라인 엘리먼트는 지오메트리에 포함되지도 않는다. 따라서 나중에 나온 요소에 덮어지지도 않는다.
