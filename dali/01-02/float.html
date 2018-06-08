@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Float</title>
+  <style>
+    .left {
+      float: left;
+    }
+    .right {
+      float: right;
+    }
+    .red {
+      background: red;
+    }
+    .green {
+      background: green;
+    }
+    .normal {
+      border: 1px solid salmon;
+    }
+    .hidden{
+      overflow: hidden;
+    }
+    .orange{
+      background: orange;
+    }
+    .black {
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+  <div style="width:500px; border:1px solid red;">
+    <!-- 한 번씩 주석처리를 하면서 하고 싶다.  -->
+    <div class="left red" style="width:200px; height:150px">1</div>
+    <div class="right green" style="width:50px; height:150px">2</div>
+    <div class="right green" style="width:50px; height:100px">3</div>
+    <div class="left red" style="width:150px; height:50px">4</div>
+    <!-- <div class="right red" style="width:40px; height:50px">test</div> -->
+    <div class="right green" style="width:150px; height:70px">5</div>
+    <!-- <div class="right red" style="width:60px; height:60px">right</div> -->
+    
+    <div class="left red" style="width:150px; height:50px">6</div> 
+    <div class="left red" style="width:150px; height:50px">7</div> 
+    <div class="normal" style="height:30px;">ABC1 ABC1 ABC1 ABC1 ABC1 ABC1 ABC1 ABC1</div>
+    <div class="hidden orange" style="height:30px;">A1</div>
+    <div class="hidden orange" style="height:30px;">1</div>
+    <div class="hidden black" style="height:30px;">1</div>
+    <div class="normal" style="height:30px;">ABC1 ABC1 ABC1 ABC1 ABC1 ABC1 ABC1 ABC1</div>
+  </div>
+  <!-- <div style="width:500px; border:1px solid red;">
+      <div class="left red" style="width:200px; height:150px">1</div>
+      <div class="right green" style="width:50px; height:150px">2</div>
+      <div class="right green" style="width:50px; height:100px">3</div>
+      <div class="left red" style="width:150px; height:50px">4</div>
+      <div class="right red" style="width:40px; height:50px">test</div>
+      <div class="right green" style="width:150px; height:70px">5</div>
+      
+      <div class="left red" style="width:150px; height:50px">6</div> 
+      <div class="left red" style="width:150px; height:50px">7</div> 
+      <div class="normal" style="height:30px;">ABC1 ABC1 ABC1 ABC1 ABC1 ABC1 ABC1 ABC1 ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</div>
+  </div> -->
+</body>
+</html>
